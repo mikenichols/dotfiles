@@ -9,7 +9,9 @@
 .emacs.d/abbrev_defs
 .emacs.d/ac-comphist.dat
 .emacs.d/bookmarks
-.emacs.d/elpa
+.emacs.d/elpa/*-readme.txt
+.emacs.d/elpa/archives
+.emacs.d/elpa/gnupg
 .emacs.d/eshell/history
 .emacs.d/ido.last
 .emacs.d/projectile-bookmarks.eld

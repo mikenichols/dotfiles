@@ -169,9 +169,6 @@
   (load-theme (intern theme) t nil))
 
 (use-package railscasts-theme)
-(use-package sublime-themes :defer t)
-(use-package phoenix-dark-mono-theme :defer t)
-(use-package solarized-theme :defer t)
 
 ;;------------------------------------------------------------------------------
 ;; Sound
@@ -344,21 +341,6 @@
   (ac-config-default)
   (setq-default completion-ignore-case 1)
   (add-to-list 'ac-modes 'elixir-mode 'rjsx-mode))
-
-;;------------------------------------------------------------------------------
-;; Magit/git
-
-;; (setq vc-follow-symlinks t)
-
-;; (use-package magit
-;;   :defer t
-;;   :config
-;;   (setq magit-last-seen-setup-instructions "1.4.0")
-;;   ;; Don't prompt when first line of commit is over 50 chars.
-;;   (setq git-commit-finish-query-functions '())
-;;   ;; Don't set new branch to track parent branch's remote
-;;   (setq magit-branch-arguments (remove "--track" magit-branch-arguments))
-;;   (setq magit-commit-arguments '("--verbose")))
 
 ;;------------------------------------------------------------------------------
 ;; ido and flx
@@ -536,13 +518,6 @@
   :config
   (add-hook 'markdown-mode-hook
             (lambda () (miken-keys-minor-mode t)) ))
-
-;; Scala
-(use-package ensime :defer t :pin melpa-stable)
-(use-package scala-mode
-  :defer t
-  :bind (("C-M-p" . miken-previous-line-five)
-         ("C-M-n" . miken-next-line-five)))
 
 (use-package coffee-mode :defer t)
 (use-package clojure-mode :defer t)
