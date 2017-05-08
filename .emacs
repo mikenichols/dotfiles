@@ -60,6 +60,30 @@
            when (memq dependency deps)
            collect pkg))
 ;; (miken-package-get-dependees 'dash)
+;; TODO: Debug this error
+;; Debugger entered--Lisp error: (wrong-type-argument arrayp nil)
+;;   aref(nil 0)
+;;   (memq (aref pkg-desc 0) cl-struct-package-desc-tags)
+;;   (and (memq (aref pkg-desc 0) cl-struct-package-desc-tags))
+;;   (or (and (memq (aref pkg-desc 0) cl-struct-package-desc-tags)) (signal (quote wrong-type-argument) (list (quote package-desc) pkg-desc)))
+;;   (progn nil (or (and (memq (aref pkg-desc 0) cl-struct-package-desc-tags)) (signal (quote wrong-type-argument) (list (quote package-desc) pkg-desc))) (aref pkg-desc 4))
+;;   (let* ((--cl-var-- (progn nil (or (and (memq (aref pkg-desc 0) cl-struct-package-desc-tags)) (signal (quote wrong-type-argument) (list (quote package-desc) pkg-desc))) (aref pkg-desc 4))) (p nil) (name nil) (--cl-var-- nil)) (while (consp --cl-var--) (setq p (car --cl-var--)) (setq name (car p)) (if (assq name package-alist) (progn (setq --cl-var-- (cons name --cl-var--)))) (setq --cl-var-- (cdr --cl-var--))) (nreverse --cl-var--))
+;;   (let* ((pkg-desc (car (cdr (assq pkg package-alist)))) (direct-deps (let* ((--cl-var-- (progn nil (or ... ...) (aref pkg-desc 4))) (p nil) (name nil) (--cl-var-- nil)) (while (consp --cl-var--) (setq p (car --cl-var--)) (setq name (car p)) (if (assq name package-alist) (progn (setq --cl-var-- ...))) (setq --cl-var-- (cdr --cl-var--))) (nreverse --cl-var--))) (indirect-deps (if (eq only (quote direct)) nil (cl-remove-duplicates (let* ((--cl-var-- direct-deps) (p nil) (--cl-var-- nil)) (while (consp --cl-var--) (setq p ...) (setq --cl-var-- ...) (setq --cl-var-- ...)) (nreverse --cl-var--)))))) (cond ((eql only (quote direct)) direct-deps) ((eql only (quote separate)) (list direct-deps indirect-deps)) ((eql only (quote indirect)) indirect-deps) (t (cl-remove-duplicates (append direct-deps indirect-deps)))))
+;;   miken-package-get-deps(with-editor)
+;;   (setq deps (miken-package-get-deps pkg))
+;;   (while (consp --cl-var--) (setq pkg (car --cl-var--)) (setq deps (miken-package-get-deps pkg)) (if (memq dependency deps) (progn (setq --cl-var-- (cons pkg --cl-var--)))) (setq --cl-var-- (cdr --cl-var--)))
+;;   (let* ((--cl-var-- (cl-remove-duplicates package-activated-list)) (pkg nil) (deps nil) (--cl-var-- nil)) (while (consp --cl-var--) (setq pkg (car --cl-var--)) (setq deps (miken-package-get-deps pkg)) (if (memq dependency deps) (progn (setq --cl-var-- (cons pkg --cl-var--)))) (setq --cl-var-- (cdr --cl-var--))) (nreverse --cl-var--))
+;;   miken-package-get-dependees(dash)
+;;   eval-region(2243 2278 t #[257 "\300\242b\210\301\207" [(2278) (miken-package-get-dependees (quote dash))] 2 "\n\n(fn IGNORE)"])  ; Reading at buffer position 2277
+;;   elisp--eval-defun()
+;;   eval-defun(nil)
+;;   funcall-interactively(eval-defun nil)
+;;   #<subr call-interactively>(eval-defun nil nil)
+;;   ad-Advice-call-interactively(#<subr call-interactively> eval-defun nil nil)
+;;   apply(ad-Advice-call-interactively #<subr call-interactively> (eval-defun nil nil))
+;;   call-interactively(eval-defun nil nil)
+;;   command-execute(eval-defun)
+
 
 ;;------------------------------------------------------------------------------
 ;; Included lisp and required libraries
