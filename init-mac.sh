@@ -10,24 +10,24 @@
 #-------------------------------------------------------------------------------
 # xcode command line tools
 
-if [ "$(xcode-select -p)" = '/Applications/Xcode.app/Contents/Developer' ]; then
-  echo 'xcode or command line tools already installed.'
-else
-  echo 'Please install xcode and add your ssh key to github before running this script.'
-  exit 1
-fi
+# if [ "$(xcode-select -p)" = '/Applications/Xcode.app/Contents/Developer' ]; then
+#   echo 'xcode or command line tools already installed.'
+# else
+#   echo 'Please install xcode and add your ssh key to github before running this script.'
+#   exit 1
+# fi
 
 #-------------------------------------------------------------------------------
 # homebrew
 
-if ! type brew > /dev/null; then
-  echo "Homebrew not found, installing..."
-  ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-else
-  echo "Homebrew already installed"
-fi
+# if ! type brew > /dev/null; then
+#   echo "Homebrew not found, installing..."
+#   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+# else
+#   echo "Homebrew already installed"
+# fi
 
-brew tap caskroom/versions
+# brew tap homebrew/cask-versions
 
 #-------------------------------------------------------------------------------
 # homebrew cask apps
@@ -52,8 +52,8 @@ done
 #-------------------------------------------------------------------------------
 # java 1.8
 
-brew tap AdoptOpenJDK/openjdk
-brew cask install adoptopenjdk8
+# brew tap AdoptOpenJDK/openjdk
+# brew cask install adoptopenjdk8
 
 #-------------------------------------------------------------------------------
 # zsh
@@ -81,16 +81,16 @@ fi
 #-------------------------------------------------------------------------------
 # Unicorn leap
 
-if ! [ -e  ~/code/unicornleap ]; then
-  echo "Installing unicornleap..."
-  mkdir -p ~/code
-  cd ~/code
-  git clone git@github.com:jgdavey/unicornleap.git
-  cd unicornleap
-  make && make install
-else
-  echo "unicornleap already installed"
-fi
+# if ! [ -e  ~/code/unicornleap ]; then
+#   echo "Installing unicornleap..."
+#   mkdir -p ~/code
+#   cd ~/code
+#   git clone git@github.com:jgdavey/unicornleap.git
+#   cd unicornleap
+#   make && make install
+# else
+#   echo "unicornleap already installed"
+# fi
 
 #-------------------------------------------------------------------------------
 # Symlinks

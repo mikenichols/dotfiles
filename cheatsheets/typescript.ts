@@ -2,6 +2,8 @@
 
 // boolean
 let isDone: boolean = false;
+// or
+const truth: boolean = true;
 
 // number literals
 let decimal: number = 6;
@@ -40,8 +42,10 @@ let n: null = null;
 // i.e. anything that is not number, string, boolean, bigint, symbol, null, or undefined.
 let o: object = {foo: "bar"};
 
+// there's also an escape hatch
+let someValue: any = "don't do this";
+
 // type assertions/casts
-let someValue: any = "this is a string";
 let strLength: number = (<string>someValue).length;
 // same as
 let strLength: number = (someValue as string).length;
@@ -58,14 +62,13 @@ let [f, b] = arr;
 // object destructuring
 let obj: object = {a: 300, b: "sparta"}
 let {a, b} = obj;
-
 // with renaming
-let {a: count, b: land} = obj;
-console.log(`We ${count} of ${land}`)
+let {a: count, b: polis} = obj;
+console.log(`We ${count} of ${polis}`)
 
 // spread
 let first = [1, 2];
-let second = [3, 4];
+let second = [3, 4]; 
 let bothPlus = [0, ...first, ...second, 5];
 
 let defaults = { food: "spicy", price: "$$", ambiance: "noisy" };

@@ -181,6 +181,10 @@ fshow_preview() {
                 --bind "alt-y:execute:$_gitLogLineToHash | xclip"
 }
 
+lgi() {
+ ls | grep -i "$1"
+}
+
 #-------------------------------------------------------------------------------
 # aliases
 
@@ -324,7 +328,7 @@ alias killpuma="ps aux | grep -v grep | grep puma | cut -d ' ' -f10 | xargs -n 1
 
 alias wh="which"
 
-alias tree="tree -I node_modules -I coverage "
+alias tree="\tree -I 'node_modules|coverage' "
 alias t="tree"
 alias t1="tree -L 1"
 alias t2="tree -L 2"
