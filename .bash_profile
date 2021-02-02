@@ -18,7 +18,7 @@ bind 'TAB:menu-complete'
 #-------------------------------------------------------------------------------
 # OSX settings
 
-if [[ $(uname) = "Darwin" ]]; then
+if [ "$MIKEN_OS" = "mac" ]; then
   # Enables colors in Mac OS X iTerm2
   if [ "$TERM" != "dumb" ]; then
     alias ls="ls --color=auto"

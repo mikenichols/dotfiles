@@ -233,9 +233,9 @@ respectively."
   (interactive)
   (let ((font-size (cond
                     ((<= (display-pixel-height) 800) "14")
+                    ((<= (display-pixel-height) 1080) "18")
                     ((<= (display-pixel-height) 1200) "18")
                     ((<= (display-pixel-height) 1440) "18")
-                    ((<= (display-pixel-height) 1920) "18")
                     (t "20") )))
     (set-face-attribute 'default nil :font (concat "Inconsolata-" font-size))))
 (miken-font-size)

@@ -1,6 +1,17 @@
 ## common.sh
 
 #-------------------------------------------------------------------------------
+# OS
+
+if [ "$(uname)" = "Darwin" ]; then
+  export MIKEN_OS="mac"
+elif [ "$(uname)" = "linux-gnu" -o "$(uname)" = "Linux" ]; then
+  export MIKEN_OS="linux"
+else
+  export MIKEN_OS="unknown"
+fi
+
+#-------------------------------------------------------------------------------
 # emacs
 
 # There can be only one
@@ -294,7 +305,8 @@ alias cdc="cd ~/code"
 alias cdC="cd ~/code/c"
 alias cdcj="cd ~/code/clojure"
 alias cdd="cd ~/Downloads"
-alias cdD="cd ~/Desktop"
+alias cdde="cd ~/Desktop"
+alias cdD="cd ~/Documents"
 alias cd.="cd ~/dotfiles"
 alias cde="cd ~/thoughts/emacs"
 alias cdj="cd ~/code/javascript"
@@ -357,9 +369,9 @@ elif [ "$(whoami)" = "mikenichols" ]; then
   source ~/dotfiles/work.sh
 fi
 
-if [ "$(uname)" = "Darwin" ]; then
+if [ "$MIKEN_OS" = "mac" ]; then
   source ~/dotfiles/common-mac.sh
-elif [ "$(uname)" = "linux-gnu" -o "$(uname)" = "Linux" ]; then
+elif [ "$MIKEN_OS" = "linux" ]; then
   source ~/dotfiles/common-linux.sh
   eval "$(ssh-agent -s)" > /dev/null
 fi
@@ -430,6 +442,13 @@ fi
 
 # For nokogiri to not shit the bed
 export PKG_CONFIG_PATH=/usr/local/opt/libxml2/lib/pkgconfig
+
+#-------------------------------------------------------------------------------
+# pyenv
+
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init -)"
+fi
 
 #-------------------------------------------------------------------------------
 
