@@ -196,6 +196,16 @@ lgi() {
  ls | grep -i "$1"
 }
 
+# Replace all occurences of $1 with $2 in files matching $3
+# Example: replace_in_place foo bar txt
+replace_in_place() {
+  local oldtext="$1"
+  local newtext="$2"
+  local fileglob="*$3*"
+
+  find . -type f -name $fileglob -exec sed -i '' -e "s/$oldtext/$newtext/g" {} \;
+}
+
 #-------------------------------------------------------------------------------
 # aliases
 

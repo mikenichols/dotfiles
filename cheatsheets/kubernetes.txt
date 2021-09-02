@@ -1,0 +1,23 @@
+https://kubernetes.io/docs/concepts/overview/components/
+
+In order to use k8s, your app needs to run inside a Container.
+A few implementations of containers are docker, containerd, and CRI-O.
+A set of Containers is called a Pod.
+Many Pods are run on a Node, which is a worker machine.
+Within a Node:
+- kubelet, sort of like a supervisor
+- kube-proxy which handles networking
+- container runtime
+
+The Control Plane manages one or more Nodes.
+This Control Plane along with Node(s) is called a Cluster.
+Clusters contain (by default) a DNS addon for resolving addresses of Nodes within a Cluster.
+
+The Control Plane contains many components.
+kube-apiserver is the front-end for the Control Plane, it scales horizontally.
+etcd is a key/value store for all Cluster data.
+kube-scheduler assigns Pods to Nodes.
+kube-controller-manager is a collection of controllers (in a single binary) that are
+  responsible for transforming the current state of the Cluster into the desired state.
+cloud-controller-manager handles cloud-specific control logic. For example, if you
+  need to scale up with more servers, CCM tells your cloud provider to spin up more servers.

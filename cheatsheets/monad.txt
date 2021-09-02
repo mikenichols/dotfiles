@@ -1,0 +1,46 @@
+http://blog.leahhanson.us/post/monad-tutorial.html
+
+What is a Monad?
+
+Monads are a design pattern that generalizes functions, function application, and
+function composition to allow them to deal with richer notions of computation than
+standard functions.
+
+A Monad is a like box with something inside of it. In programming, everything has a
+type so if you're holding a Monad in your hand and you ask it its type, it will say
+Monad<T>.
+
+For a concrete example, a shoebox has type Box<Shoes>. The Box is an instance of a
+Monad and the shoes are the thing inside the box.
+
+The first thing that makes something a Monad is the ability to put a thing inside a
+box. This is a function with the signature: T => Monad<T>. This function is
+traditionally called lift and would be implemented as a class method or a static
+method. It doesn't require an instance because it results in an instance. A better
+name for this function might be pack.
+
+The second thing that makes something a Monad is the ability to perform an action on
+the thing inside the box. This function has the signature: T => Monad<U>. This
+function is traditionally called bind and would be implemented as an instance method.
+The idea with bind is to run that function inside the Monad. The way this happens
+depends on the Monad.
+
+At this point, you're asking yourself: "Why doesn't the bind function have the
+signature T => U?". To answer this, we need to look at a concrete example of a Monad.
+
+Let's take a look at the Maybe monad. The Maybe monad is a type that is the union of
+two types, Some<T> and Nothing. In pseudocode: type Maybe<T> = Some<T> | Nothing. Back
+to our shoebox example, if I'm holding a thing of type Maybe<Shoes>, what I'm holding
+is a box that has either Some<Shoes> or Nothing inside of it. Now to answer the question:
+why doesn't bind have signature T => U?
+
+In our shoebox example, let's take T to be Shoes and U to be CleanedShoes. The reason
+why the type of bind can't be Shoes => CleanedShoes is that given a Maybe<Shoes>, we
+can't always return CleanedShoes because we can't transform Nothing into
+CleanedShoes. We can only transform Nothing into Nothing. Given a Maybe<Shoes> the
+best we can do is return Some<CleanedShoes> given we got Some<Shoes>, and return
+Nothing given we got Nothing.
+
+This answer is somewhat unsatisfactory because it answers the question for bind in
+the concrete case but not in the abstract case. Let's look at another concrete example
+with something more fun: money.

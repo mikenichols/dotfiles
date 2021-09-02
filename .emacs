@@ -708,24 +708,24 @@ respectively."
 ;;------------------------------------------------------------------------------
 ;; alchemist / elixir
 
-(use-package alchemist
-  :defer t
-  :init
-  (setq alchemist-key-command-prefix (kbd "C-c ,"))
-  :config
-  (defun miken-insert-iex-pry ()
-    "Inserts the line `require IEx; IEx.pry'"
-    (interactive)
-    (miken-open-line-above)
-    (insert "require IEx; IEx.pry"))
-  (setq alchemist-mix-test-task "espec")
-  (add-to-list 'elixir-mode-hook
-               (defun auto-activate-ruby-end-mode-for-elixir-mode ()
-                 (set (make-variable-buffer-local 'ruby-end-expand-keywords-before-re)
-                      "\\(?:^\\|\\s-+\\)\\(?:do\\)")
-                 (set (make-variable-buffer-local 'ruby-end-check-statement-modifiers) nil)
-                 (ruby-end-mode +1)))
-  :bind (("M-s-p" . miken-insert-iex-pry)))
+;; (use-package alchemist
+;;   :defer t
+;;   :init
+;;   (setq alchemist-key-command-prefix (kbd "C-c ,"))
+;;   :config
+;;   (defun miken-insert-iex-pry ()
+;;     "Inserts the line `require IEx; IEx.pry'"
+;;     (interactive)
+;;     (miken-open-line-above)
+;;     (insert "require IEx; IEx.pry"))
+;;   (setq alchemist-mix-test-task "espec")
+;;   (add-to-list 'elixir-mode-hook
+;;                (defun auto-activate-ruby-end-mode-for-elixir-mode ()
+;;                  (set (make-variable-buffer-local 'ruby-end-expand-keywords-before-re)
+;;                       "\\(?:^\\|\\s-+\\)\\(?:do\\)")
+;;                  (set (make-variable-buffer-local 'ruby-end-check-statement-modifiers) nil)
+;;                  (ruby-end-mode +1)))
+;;   :bind (("M-s-p" . miken-insert-iex-pry)))
 
 ;;------------------------------------------------------------------------------
 ;; ediff setup

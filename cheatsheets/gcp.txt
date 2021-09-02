@@ -1,0 +1,67 @@
+https://cloud.google.com/docs/overview
+
++-------------------------------------------------------------------------------
+| Platform overview
+
+Resources exist within either global, regional, or zonal
+
+Any Google Cloud resources that you allocate and use must belong to a project. You
+can think of a project as the organizing entity for what you're building. A project
+is made up of the settings, permissions, and other metadata that describe your
+applications. Each project has one billing account.
+
+Google Cloud gives you three basic ways to interact with the services(class) and resources(instance).
+- Web UI (google cloud console)
+- CLI: Install SDK on your computer and use gcloud command, or web-based "cloud shell"
+- Code Libraries: In go, java, javascript, python, ruby, php, c#, and c++
+
+These libraries allow both interaction with services/resources as well as admin tasks
+
+BOOM!: https://cloud.google.com/docs/authentication
+
++-------------------------------------------------------------------------------
+| Services
+
+Computing and hosting services:
+- Cloud Functions (serverless, functions as a service)
+- Compute Engine (infrastructure as a service) virtual machines
+- App Engine (platform as a service) manages networking for you
+- Google Kubernetes Engine (containers as a service) uses k8s model for networking(?)
+
++-------------------------------------------------------------------------------
+| Storage
+
+3 types of plain storage:
+- Cloud Storage: comes in 4 flavors: standard, nearline, coldline, and archive
+- Persistent disks on compute engine (self explanatory)
+- Filestore: Fully managed NFS file server, accessible through compute engine or GKE
+
++-------------------------------------------------------------------------------
+| Database
+
+Cloud SQL: mysql or postgresql
+Cloud Spanner: Super heavy-duty powerful
+Cloud Bigtable: for tabular data
+(You can also use Firestore for file system based storage e.g. sqlite or mongodb)
+
++-------------------------------------------------------------------------------
+| Networking Services
+
+While App Engine manages networking for you, and GKE uses the Kubernetes model,
+Compute Engine provides a set of networking services.
+
++-------------------------------------------------------------------------------
+| Big Data Services
+
++-------------------------------------------------------------------------------
+| Machine Learning
+
++-------------------------------------------------------------------------------
+| Dev tools
+
+Cloud build (CI/CD pipeline)
+Cloud SDK (for CLI)
+Tekton (k8s-native CI/CD (?))
+Jenkins
+Artifact Registry
+Cloud Deployment Manager
