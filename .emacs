@@ -517,22 +517,24 @@ respectively."
           (lambda ()
             (define-key emacs-lisp-mode-map (kbd "RET") #'newline-and-indent)))
 
+(setq miken-js-indent 4)
+
 ;; JavaScript etc.
 (use-package js2-mode
   :defer t
   :config
   (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
-  (customize-set-variable 'js2-basic-offset 2)
+  (customize-set-variable 'js2-basic-offset 'miken-js-indent)
   (add-hook 'js2-mode-hook
             (lambda () (define-key js2-mode-map (kbd "RET") #'newline-and-indent))))
 
 (add-hook 'js-mode-hook
           (lambda () (define-key js-mode-map (kbd "RET") #'newline-and-indent))
-          (customize-set-variable 'js-indent-level 2))
+          (customize-set-variable 'js-indent-level 'miken-js-indent))
 ;; JSX
 (use-package rjsx-mode
   :config
-  (customize-set-variable 'jsx-indent-level 2))
+  (customize-set-variable 'jsx-indent-level 'miken-js-indent))
 
 (defun miken-setup-tide-mode ()
   (interactive)
@@ -551,12 +553,12 @@ respectively."
   :config
   (add-hook 'before-save-hook #'tide-format-before-save)
   (add-hook 'typescript-mode-hook #'miken-setup-tide-mode)
-  (setq typescript-indent-level 2))
+  (setq typescript-indent-level 'miken-js-indent))
 
 ;; TSX
 (use-package web-mode
   :init
-  (setq standard-indent 2)
+  (setq standard-indent 'miken-js-indent)
   :config
   (add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
   (add-hook 'web-mode-hook
