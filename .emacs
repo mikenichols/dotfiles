@@ -512,6 +512,12 @@ respectively."
               sh-basic-offset 2)
 (add-hook 'prog-mode-hook #'linum-mode)
 
+(use-package indent-guide
+  :defer t
+  :config
+  (setq indent-guide-recursive t))
+(add-hook 'python-mode-hook #'indent-guide-mode)
+
 ;; elisp
 (add-hook 'emacs-lisp-mode-hook
           (lambda ()
