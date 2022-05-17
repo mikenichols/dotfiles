@@ -260,18 +260,6 @@ respectively."
   :config (miken-override-theme "railscasts"))
 
 ;;------------------------------------------------------------------------------
-;; Sound
-
-(ifnot (and (fboundp 'play-sound-internal)
-            (subrp (symbol-function 'play-sound-internal)))
-  (require 'play-sound))
-
-(defun miken-lightsaber (opt)
-  (interactive)
-  (let ((action (if opt "up" "down")))
-    (play-sound-file (concat user-emacs-directory "sounds/lightsaber-" action ".mp3"))))
-
-;;------------------------------------------------------------------------------
 ;; Frame management
 
 (setq default-frame-alist
@@ -283,20 +271,6 @@ respectively."
 ;; Full path in frame title
 (if window-system
   (setq frame-title-format '(buffer-file-name "%f" ("%b"))))
-
-(defun miken-make-frame-command ()
-  "Play a lightsaber ignition sound when making a new frame"
-  (interactive)
-  (miken-lightsaber t)
-  (make-frame-command))
-(global-set-key (kbd "C-x 5 2") #'miken-make-frame-command)
-
-(defun miken-delete-frame ()
-  "Play a lightsaber deactivate sound when killing a frame"
-  (interactive)
-  (miken-lightsaber nil)
-  (delete-frame))
-(global-set-key (kbd "C-x 5 0") #'miken-delete-frame)
 
 ;;------------------------------------------------------------------------------
 ;; Window management
@@ -1002,7 +976,5 @@ respectively."
   (cl-flet ((process-list ())) ad-do-it))
 
 ;;------------------------------------------------------------------------------
-
-(miken-lightsaber t)
 
 ;;; End .emacs
