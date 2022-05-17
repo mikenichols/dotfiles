@@ -29,3 +29,5 @@ def function(arg):
 
 
     return "yes"
+
+x = function()

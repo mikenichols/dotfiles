@@ -1,0 +1,10 @@
+"url": "https://yoo2080.wordpress.com/2014/05/16/how-to-list-emacs-package-dependencies/#comment-1520"
+"url": "https://ftp.gnu.org/old-gnu/Manuals/elisp-manual-20-2.5/html_chapter/elisp_22.html"
+"url": "http://superuser.com/questions/448601/how-to-replace-a-keymap-in-emacs"
+"url": "http://www.gnu.org/software/emacs/manual/html_node/elisp/Controlling-Active-Maps.html"
+"url": "http://stackoverflow.com/questions/27134446/how-to-restored-default-keymap-without-restarting-emacs"
+"url": "http://www.greghendershott.com/2017/02/emacs-themes.html"
+"url": "https://ebzzry.io/en/emacs-pairs/"
+"url": "https://github.com/emacs-tw/awesome-emacs"
+"url": "https://github.com/alhassy/ElispCheatSheet"
+"url": "https://lists.gnu.org/mailman/options/emacs-devel/myk.emacs@fastm

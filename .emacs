@@ -483,7 +483,12 @@ respectively."
 (use-package avy :bind ("M-s-g" . avy-goto-word-or-subword-1))
 
 (global-set-key (kbd "M-g") #'goto-line)
-(global-set-key (kbd "M-,") #'pop-tag-mark)
+
+(use-package dumb-jump
+  :config
+  (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
+  (setq dumb-jump-force-searcher 'rg
+        xref-show-definitions-function #'xref-show-definitions-completing-read))
 
 ;;------------------------------------------------------------------------------
 ;; Neotree
