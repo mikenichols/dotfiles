@@ -2,7 +2,7 @@
 set -euo pipefail
 IFS=$'\n\t'
 
-forkpoint="$(git merge-base --fork-point master)"
+forkpoint="$(git merge-base --fork-point main)"
 changed_files="$(git diff --name-only "$forkpoint")"
 
 # Filter out non-spec files

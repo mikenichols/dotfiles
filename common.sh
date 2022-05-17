@@ -340,8 +340,8 @@ alias un7zip="7z x"
 
 alias g="git"
 alias gx="gitx &"
-alias git-prune-merged-remote="git branch --remote --merged | grep -v /master | sed 's/origin\///' | xargs -n 1 git push --delete origin"
-alias git-prune-merged-local="git checkout master && git branch --merged | grep -v '* master' | xargs -n 1 git branch --delete"
+alias git-prune-merged-remote="git branch --remote --merged | grep -v /main | sed 's/origin\///' | xargs -n 1 git push --delete origin"
+alias git-prune-merged-local="git checkout main && git branch --merged | grep -v '* main' | xargs -n 1 git branch --delete"
 
 alias pwdp="pwd -P"
 
