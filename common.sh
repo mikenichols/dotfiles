@@ -103,6 +103,10 @@ rgi() {
   \rg $(echo "$*" | sed 's/ / -g !/g')
 }
 
+rgw() {
+  \rg "\b$1\b"
+}
+
 # requires node and http-server:
 #   npm install http-server -g
 serve() {
