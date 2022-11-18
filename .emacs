@@ -376,9 +376,7 @@ respectively."
 
 (use-package projectile
   :config
-  (projectile-global-mode)
-  (setq projectile-mode-line " Pj"
-        projectile-project-root-files-functions
+  (setq projectile-project-root-files-functions
         '(projectile-root-local
           projectile-root-top-down
           projectile-root-bottom-up
@@ -390,6 +388,8 @@ respectively."
    ("M-s-b" . projectile-ibuffer)
    ("M-s-s" . projectile-ag)))
 
+(setq projectile--mode-line " Pj")
+(projectile-global-mode)
 (recentf-mode)
 
 ;;------------------------------------------------------------------------------
@@ -462,7 +462,8 @@ respectively."
   :config
   (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
   (setq dumb-jump-force-searcher 'rg
-        xref-show-definitions-function #'xref-show-definitions-completing-read))
+        xref-show-definitions-function #'xref-show-definitions-completing-read
+        xref-prompt-for-identifier nil))
 
 ;;------------------------------------------------------------------------------
 ;; Neotree
@@ -491,11 +492,24 @@ respectively."
               sh-basic-offset 2)
 (add-hook 'prog-mode-hook #'linum-mode)
 
+;; Python
 (use-package indent-guide
   :defer t
-  :config
-  (setq indent-guide-recursive t))
+  :config (setq indent-guide-recursive t))
 (add-hook 'python-mode-hook #'indent-guide-mode)
+
+(defun miken-insert-python-breakpoint ()
+  "Inserts the line `import pdb; pdb.set_trace()'"
+  (interactive)
+  (save-excursion
+    (miken-open-line-above)
+    (insert "import pdb; pdb.set_trace()")))
+
+(use-package python
+  :config
+  (add-hook 'python-mode-hook
+            (lambda ()
+              (define-key python-mode-map (kbd "M-s-p") #'miken-insert-python-breakpoint))))
 
 ;; elisp
 (add-hook 'emacs-lisp-mode-hook
@@ -509,17 +523,22 @@ respectively."
   :defer t
   :config
   (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
-  (customize-set-variable 'js2-basic-offset 'miken-js-indent)
+  (customize-set-variable 'js2-basic-offset miken-js-indent)
   (add-hook 'js2-mode-hook
             (lambda () (define-key js2-mode-map (kbd "RET") #'newline-and-indent))))
 
+(use-package prettier-js
+  :defer t
+  :config
+  (add-hook 'js-mode-hook 'prettier-js-mode))
+
 (add-hook 'js-mode-hook
           (lambda () (define-key js-mode-map (kbd "RET") #'newline-and-indent))
-          (customize-set-variable 'js-indent-level 'miken-js-indent))
+          (customize-set-variable 'js-indent-level miken-js-indent))
 ;; JSX
 (use-package rjsx-mode
   :config
-  (customize-set-variable 'jsx-indent-level 'miken-js-indent))
+  (customize-set-variable 'jsx-indent-level miken-js-indent))
 
 (defun miken-setup-tide-mode ()
   (interactive)
@@ -538,12 +557,12 @@ respectively."
   :config
   (add-hook 'before-save-hook #'tide-format-before-save)
   (add-hook 'typescript-mode-hook #'miken-setup-tide-mode)
-  (setq typescript-indent-level 'miken-js-indent))
+  (setq typescript-indent-level miken-js-indent))
 
 ;; TSX
 (use-package web-mode
   :init
-  (setq standard-indent 'miken-js-indent)
+  (setq standard-indent miken-js-indent)
   :config
   (add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
   (add-hook 'web-mode-hook
@@ -603,7 +622,7 @@ respectively."
 ;;------------------------------------------------------------------------------
 ;; ruby/rails settings
 
-(use-package rbenv :defer true :config (global-rbenv-mode))
+(use-package rbenv :defer t :config (global-rbenv-mode))
 
 (use-package ruby-hash-syntax :defer t)
 
@@ -871,7 +890,7 @@ respectively."
       ;; now insert as many time as requested
       (while (> n 0)
         (insert current-line)
-        (decf n))))
+        (cl-decf n))))
   (forward-line))
 (global-set-key (kbd "C-c d") #'miken-copy-line-below)
 

@@ -37,7 +37,9 @@ DISABLE_CORRECTION="true"
 # oh-my-zsh default aliases this to 'ls -l'
 alias ll="ls -hAl"
 # and this to ls -G
-alias ls="ls --color=auto"
+# alias ls="ls --color=auto"
+
+export LSCOLORS="ExGxcxdxCxegedabagacad"
 
 #-------------------------------------------------------------------------------
 # zsh functions
