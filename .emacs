@@ -118,7 +118,7 @@
 ;; Global modes
 
 (global-hl-line-mode 1) ;; Highlight current line
-(global-set-key (kbd "C-<f5>") #'linum-mode)
+(global-set-key (kbd "C-<f5>") #'display-line-numbers-mode)
 
 ;; DA-DA-DA DAAA, daa daa DAAT duh-DAAAAAA!
 (winner-mode)
@@ -490,7 +490,7 @@ respectively."
 (setq-default indent-tabs-mode nil
               tab-width 2
               sh-basic-offset 2)
-(add-hook 'prog-mode-hook #'linum-mode)
+(add-hook 'prog-mode-hook #'display-line-numbers-mode)
 
 ;; Python
 (use-package indent-guide
@@ -857,18 +857,6 @@ respectively."
       (delete-file filename)
       (set-visited-file-name newname)
       (set-buffer-modified-p nil))))
-
-;; Word count
-(defun miken-count-words-buffer ()
-  "Counts the number of words in the buffer."
-  (interactive)
-  (let ((count 0))
-    (save-excursion
-      (goto-char (point-min))
-      (while (< (point) (point-max))
-        (forward-word 1)
-        (setq count (+ 1 count)) )
-      (message "buffer contains %d words." count))))
 
 ;;------------------------------------------------------------------------------
 ;; Custom functions
