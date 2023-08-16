@@ -45,6 +45,10 @@ rn() {
   rename -n "s/$1/$2/g" ./*
 }
 
+rename_music() {
+  rename -n --sanitize --lower-case *
+}
+
 hpg() {
   history | grep "$1"
 }
@@ -465,8 +469,11 @@ if command -v pyenv 1>/dev/null 2>&1; then
 fi
 
 #-------------------------------------------------------------------------------
+# Homebrew
 
-# Seriously?
+eval "$(/opt/homebrew/bin/brew shellenv)"
 export HOMEBREW_NO_ANALYTICS=1
+
+#-------------------------------------------------------------------------------
 
 ## end common.sh
