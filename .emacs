@@ -66,11 +66,11 @@
     (setq mac-command-modifier 'meta
           mac-option-modifier 'super))
 
-(if (memq window-system '(mac ns x))
-    (use-package exec-path-from-shell
-      :init (exec-path-from-shell-initialize)))
+;; (if (memq window-system '(mac ns x))
+;;     (use-package exec-path-from-shell
+;;       :init (exec-path-from-shell-initialize)))
 
-(add-to-list 'exec-path "/usr/local/bin")
+;; (add-to-list 'exec-path "/usr/local/bin")
 
 ;;------------------------------------------------------------------------------
 ;; Included lisp and required libraries
@@ -127,6 +127,29 @@
   :config (drag-stuff-global-mode)
   :bind (("M-<up>" . drag-stuff-up)
          ("M-<down>" . drag-stuff-down)))
+
+;;------------------------------------------------------------------------------
+;; Treesitter
+
+(setq treesit-language-source-alist
+   '((bash "https://github.com/tree-sitter/tree-sitter-bash")
+     (cmake "https://github.com/uyha/tree-sitter-cmake")
+     (css "https://github.com/tree-sitter/tree-sitter-css")
+     (elisp "https://github.com/Wilfred/tree-sitter-elisp")
+     (go "https://github.com/tree-sitter/tree-sitter-go")
+     (html "https://github.com/tree-sitter/tree-sitter-html")
+     (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
+     (json "https://github.com/tree-sitter/tree-sitter-json")
+     (make "https://github.com/alemuller/tree-sitter-make")
+     (markdown "https://github.com/ikatyang/tree-sitter-markdown")
+     (python "https://github.com/tree-sitter/tree-sitter-python")
+     (toml "https://github.com/tree-sitter/tree-sitter-toml")
+     (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
+     (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
+     (yaml "https://github.com/ikatyang/tree-sitter-yaml")))
+
+;; Run this once
+;; (mapc #'treesit-install-language-grammar (mapcar #'car treesit-language-source-alist))
 
 ;;------------------------------------------------------------------------------
 ;; Parens
@@ -516,16 +539,18 @@ respectively."
           (lambda ()
             (define-key emacs-lisp-mode-map (kbd "RET") #'newline-and-indent)))
 
-(setq miken-js-indent 4)
+(setq miken-js-indent 2)
 
 ;; JavaScript etc.
-(use-package js2-mode
-  :defer t
-  :config
-  (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
-  (customize-set-variable 'js2-basic-offset miken-js-indent)
-  (add-hook 'js2-mode-hook
-            (lambda () (define-key js2-mode-map (kbd "RET") #'newline-and-indent))))
+;; (use-package js2-mode
+;;   :defer t
+;;   :config
+;;   (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
+;;   (customize-set-variable 'js2-basic-offset miken-js-indent)
+;;   (add-hook 'js2-mode-hook
+;;             (lambda () (define-key js2-mode-map (kbd "RET") #'newline-and-indent))))
+
+(add-to-list 'auto-mode-alist '("\\.js$" . js-ts-mode))
 
 (use-package prettier-js
   :defer t
@@ -553,22 +578,26 @@ respectively."
   ;; (company-mode +1))
 
 ;; TypeScript
-(use-package tide
-  :config
-  (add-hook 'before-save-hook #'tide-format-before-save)
-  (add-hook 'typescript-mode-hook #'miken-setup-tide-mode)
-  (setq typescript-indent-level miken-js-indent))
+;; (use-package tide
+;;   :config
+;;   (add-hook 'before-save-hook #'tide-format-before-save)
+;;   (add-hook 'typescript-mode-hook #'miken-setup-tide-mode)
+;;   (setq typescript-indent-level miken-js-indent))
+
+;; (use-package tree-sitter-langs :ensure t)
 
 ;; TSX
-(use-package web-mode
-  :init
-  (setq standard-indent miken-js-indent)
-  :config
-  (add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
-  (add-hook 'web-mode-hook
-            (lambda ()
-              (when (string-equal "tsx" (file-name-extension buffer-file-name))
-                (miken-setup-tide-mode)))))
+;; (use-package typescript-ts-mode)
+(add-to-list 'auto-mode-alist '("\\.tsx\\'" . typescript-ts-mode))
+;; (use-package web-mode
+;;   :init
+;;   (setq standard-indent miken-js-indent)
+;;   :config
+;;   (add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
+;;   (add-hook 'web-mode-hook
+;;             (lambda ()
+;;               (when (string-equal "tsx" (file-name-extension buffer-file-name))
+;;                 (miken-setup-tide-mode)))))
 
 ;; HTML
 (global-set-key (kbd "C-c e") #'sgml-close-tag)
