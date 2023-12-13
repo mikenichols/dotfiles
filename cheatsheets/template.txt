@@ -1,0 +1,48 @@
+Template Cheatsheet
+
+# Comments
+# Hello world
+# Print interpolation
+
+# Built-ins
+# true/false
+# null value
+# if/else-if/else, and/or
+# switch
+# exceptions
+# function syntax
+
+# Math
+# exponentiation
+
+# Strings
+# split
+# sort
+# join
+# substring
+
+# Regex syntax
+
+# Arrays/Lists
+# literal
+# iteration
+# sort
+# custom sorting
+# splicing
+# merge sort
+# quick sort
+
+# Hash
+# default value
+# key existence
+# value existence
+# group by
+# combining 2 hashes
+
+# Class syntax
+# methods
+
+# Node
+# Linked list example
+# Tree example
+# Graph example
