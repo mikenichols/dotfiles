@@ -146,31 +146,6 @@ oci() {
   fi
 }
 
-workfromhome() {
-  if grep "\[user\]" .git/config > /dev/null; then
-    echo "Already set up"
-  else
-    echo "Setting work email for this repo..."
-    echo "[user]\n  email = mike.nichols@avant.com\n  name = Mike Nichols" >> .git/config
-  fi
-}
-
-s() {
-  local file="$1"
-
-  if [ -z "$file" ]; then
-    file='.'
-  fi
-
-  bundle exec rspec "$file"
-
-  if [ "$?" -eq '0' ]; then
-    unicornleap -s 1.5
-  else
-    unicornleap -s 1.5 --unicorn sweetjesus.png
-  fi
-}
-
 trim_end() {
   if [ -e trimmed.mp3 ]; then
     rm trimmed.mp3
@@ -200,10 +175,6 @@ fshow_preview() {
                 --bind "alt-y:execute:$_gitLogLineToHash | xclip"
 }
 
-lgi() {
- ls | grep -i "$1"
-}
-
 # Replace all occurences of $1 with $2 in files matching $3
 # Example: replace_in_place foo bar txt
 replace_in_place() {
@@ -219,17 +190,12 @@ replace_in_place() {
 
 # I'm really more of a dog person
 alias dog="cat"
-alias less="bat"
 
 # oh-my-zsh default aliases this to 'ls -l'
 alias ll="ls -hAl"
 
-alias o=open
-
 # Shows how much space each directory/file in the current directory is taking up
 alias dush="du -sh ./*"
-
-alias sc="shellcheck"
 
 alias underscore2dash='rename "s/_/-/g" ./*'
 
@@ -238,7 +204,6 @@ alias np="echo \"\$PATH\" | tr : '\n'"
 
 # homebrew update all
 alias hbua="brew update && brew upgrade && brew cleanup"
-alias bs="brew services"
 
 # bundler
 alias b="bundle check 2>/dev/null || bundle install"
@@ -327,17 +292,14 @@ alias cdde="cd ~/Desktop"
 alias cdD="cd ~/Documents"
 alias cd.="cd ~/dotfiles"
 alias cde="cd ~/thoughts/emacs"
+alias cdh="cd ~/code/haskell"
 alias cdj="cd ~/code/javascript"
 alias cdl="cd ~/code/lisp"
-alias cdm="cd ~/code/mikendotio"
 alias cdM="cd ~/Movies"
 alias cdP="cd ~/Pictures"
-alias cdpm="cd ~/code/rails/programmer-mike"
 alias cdr="cd ~/code/ruby"
 alias cdra="cd ~/code/rails"
 alias cdrr="cd ~/code/ruby-refactor"
-alias cdrw="cd ~/code/rails/recursewords"
-alias cdsq="cd ~/code/sendql"
 alias cdt="cd ~/thoughts"
 
 # Java command line
@@ -347,7 +309,6 @@ alias vt="java -cp .:junit-4.11.jar:hamcrest-core-1.3.jar org.junit.runner.JUnit
 alias un7zip="7z x"
 
 alias g="git"
-alias gx="gitx &"
 alias git-prune-merged-remote="git branch --remote --merged | grep -v /main | sed 's/origin\///' | xargs -n 1 git push --delete origin"
 alias git-prune-merged-local="git checkout main && git branch --merged | grep -v '* main' | xargs -n 1 git branch --delete"
 
@@ -355,8 +316,6 @@ alias pwdp="pwd -P"
 
 alias killspring="ps aux | egrep 'spring (app|server)' | tr -s ' ' | cut -d' ' -f2 | xargs -n 1 kill -9"
 alias killpuma="ps aux | grep -v grep | grep puma | cut -d ' ' -f10 | xargs -n 1 kill"
-
-alias wh="which"
 
 alias tree="\tree -I 'node_modules|coverage|__pycache__' "
 alias t="tree"
@@ -367,14 +326,6 @@ alias t4="tree -L 4"
 alias t5="tree -L 5"
 alias t6="tree -L 6"
 alias t7="tree -L 7"
-
-# make
-alias mt="make test && unicornleap -s 1.5"
-
-# haskell
-alias cdh="cd ~/code/haskell"
-
-alias hst="history"
 
 alias rg="rg -S"
 
@@ -417,6 +368,7 @@ drun() {
 
 # Nicer colors for emacs in terminal
 export TERM=xterm-256color
+export CLICOLOR=1
 
 if type fuck &> /dev/null; then
   eval "$(thefuck --alias)"
