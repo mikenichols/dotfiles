@@ -20,7 +20,7 @@ DISABLE_AUTO_UPDATE="true"
 # Which plugins would you like to load? (plugins can be found in $ZSH/plugins/*)
 # Custom plugins may be added to $ZSH/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git github node osx ruby)
+plugins=(git github node osx)
 
 source "$ZSH"/oh-my-zsh.sh
 
@@ -36,8 +36,6 @@ DISABLE_CORRECTION="true"
 
 # oh-my-zsh default aliases this to 'ls -l'
 alias ll="ls -hAl"
-# and this to ls -G
-# alias ls="ls --color=auto"
 
 export LSCOLORS="ExGxcxdxCxegedabagacad"
 
@@ -45,13 +43,6 @@ export LSCOLORS="ExGxcxdxCxegedabagacad"
 # zsh functions
 
 alias resh="source ~/.zprofile && echo '.zprofile reloaded'"
-
-#-------------------------------------------------------------------------------
-# Global aliases
-
-alias -g C=' | wc -l'
-alias -g DN=/dev/null
-alias -g PG=' | grep'
 
 #-------------------------------------------------------------------------------
 # path
