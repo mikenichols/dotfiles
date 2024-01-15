@@ -66,12 +66,6 @@
     (setq mac-command-modifier 'meta
           mac-option-modifier 'super))
 
-;; (if (memq window-system '(mac ns x))
-;;     (use-package exec-path-from-shell
-;;       :init (exec-path-from-shell-initialize)))
-
-;; (add-to-list 'exec-path "/usr/local/bin")
-
 ;;------------------------------------------------------------------------------
 ;; Included lisp and required libraries
 
@@ -122,6 +116,7 @@
 
 ;; DA-DA-DA DAAA, daa daa DAAT duh-DAAAAAA!
 (winner-mode)
+(recentf-mode)
 
 (use-package drag-stuff
   :config (drag-stuff-global-mode)
@@ -156,88 +151,6 @@
 
 (show-paren-mode 1)
 (electric-pair-mode)
-
-;; From https://ebzzry.io/en/emacs-pairs/
-(defmacro def-pairs (pairs)
-  "Define functions for pairing. PAIRS is an alist of (NAME . STRING)
-conses, where NAME is the function name that will be created and
-STRING is a single-character string that marks the opening character.
-
-  (def-pairs ((paren . \"(\")
-              (bracket . \"[\"))
-
-defines the functions MIKEN-WRAP-WITH-PAREN and MIKEN-WRAP-WITH-BRACKET,
-respectively."
-  `(progn
-     ,@(cl-loop for (key . val) in pairs
-             collect
-             `(defun ,(read (concat
-                             "miken-wrap-with-"
-                             (prin1-to-string key)
-                             "s"))
-                  (&optional arg)
-                (interactive "p")
-                (sp-wrap-with-pair ,val)))))
-
-(def-pairs ((paren . "(")
-            (bracket . "[")
-            (brace . "{")
-            (single-quote . "'")
-            (double-quote . "\"")
-            (back-quote . "`")))
-
-(use-package smartparens-config
-  :ensure smartparens
-  :config (show-smartparens-global-mode t)
-  :bind (("C-M-a" . sp-beginning-of-sexp)
-         ("C-M-e" . sp-end-of-sexp)
-
-         ("C-<down>" . sp-down-sexp)
-         ("C-<up>"   . sp-up-sexp)
-         ;; ("M-<down>" . sp-backward-down-sexp)
-         ;; ("M-<up>"   . sp-backward-up-sexp)
-
-         ("C-M-f" . sp-forward-sexp)
-         ("C-M-b" . sp-backward-sexp)
-
-         ("C-M-n" . sp-next-sexp)
-         ("C-M-p" . sp-previous-sexp)
-
-         ("C-S-f" . sp-forward-symbol)
-         ("C-S-b" . sp-backward-symbol)
-
-         ("C-c C-l" . sp-forward-slurp-sexp)
-         ("M-<right>" . sp-forward-barf-sexp)
-         ("C-c C-h"  . sp-backward-slurp-sexp)
-         ("M-<left>"  . sp-backward-barf-sexp)
-
-         ("C-M-t" . sp-transpose-sexp)
-         ("C-M-k" . sp-kill-sexp)
-         ;; ("C-k"   . sp-kill-hybrid-sexp)
-         ("M-k"   . sp-backward-kill-sexp)
-         ("C-M-w" . sp-copy-sexp)
-         ("C-M-d" . delete-sexp)
-
-         ("M-<backspace>" . backward-kill-word)
-         ("C-<backspace>" . sp-backward-kill-word)
-         ([remap sp-backward-kill-word] . backward-kill-word)
-
-         ("M-[" . sp-backward-unwrap-sexp)
-         ("M-]" . sp-unwrap-sexp)
-
-         ("C-x C-t" . sp-transpose-hybrid-sexp)
-
-         ("C-c (" . miken-wrap-with-parens)
-         ("C-c [" . miken-wrap-with-brackets)
-         ("C-c {" . miken-wrap-with-braces)
-         ("C-c '" . miken-wrap-with-single-quotes)
-         ("C-c \"" . miken-wrap-with-double-quotes)
-         ("C-c _" . miken-wrap-with-underscores)
-         ("C-c `" . miken-wrap-with-back-quotes)))
-
-
-;; (add-hook 'prog-mode-hook 'turn-on-smartparens-strict-mode)
-;; (add-hook 'markdown-mode-hook 'turn-on-smartparens-strict-mode)
 
 ;;------------------------------------------------------------------------------
 ;; Saving
@@ -334,11 +247,6 @@ respectively."
 
 (global-set-key (kbd "C-x C-k") (lambda () (interactive) (kill-buffer (current-buffer))))
 
-(global-set-key (kbd "C-x C-b") #'switch-to-buffer-other-window)
-
-;; Previously bound to C-x C-b
-(global-set-key (kbd "C-x C-l") #'list-buffers)
-
 (setq-default uniquify-buffer-name-style 'post-forward)
 
 ;;------------------------------------------------------------------------------
@@ -413,7 +321,6 @@ respectively."
 
 (setq projectile--mode-line " Pj")
 (projectile-global-mode)
-(recentf-mode)
 
 ;;------------------------------------------------------------------------------
 ;; Autocomplete/auto-complete
@@ -495,7 +402,8 @@ respectively."
   :bind (("M-s-a" . miken-neotree))
   :config
   (setq neo-smart-open t
-        neo-autorefresh nil)
+        neo-autorefresh nil
+        neo-show-hidden-files t)
   (defun miken-neotree ()
     "Open neotree using the projectile-project-root."
     (interactive)
@@ -541,15 +449,6 @@ respectively."
 
 (setq miken-js-indent 2)
 
-;; JavaScript etc.
-;; (use-package js2-mode
-;;   :defer t
-;;   :config
-;;   (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
-;;   (customize-set-variable 'js2-basic-offset miken-js-indent)
-;;   (add-hook 'js2-mode-hook
-;;             (lambda () (define-key js2-mode-map (kbd "RET") #'newline-and-indent))))
-
 (add-to-list 'auto-mode-alist '("\\.js$" . js-ts-mode))
 
 (use-package prettier-js
@@ -560,44 +459,9 @@ respectively."
 (add-hook 'js-mode-hook
           (lambda () (define-key js-mode-map (kbd "RET") #'newline-and-indent))
           (customize-set-variable 'js-indent-level miken-js-indent))
-;; JSX
-(use-package rjsx-mode
-  :config
-  (customize-set-variable 'jsx-indent-level miken-js-indent))
 
-(defun miken-setup-tide-mode ()
-  (interactive)
-  (tide-setup)
-  (flycheck-mode +1)
-  (setq flycheck-check-syntax-automatically '(save mode-enabled))
-  (eldoc-mode +1)
-  (tide-hl-identifier-mode +1))
-  ;; company is an optional dependency. You have to
-  ;; install it separately via package-install
-  ;; `M-x package-install [ret] company`
-  ;; (company-mode +1))
-
-;; TypeScript
-;; (use-package tide
-;;   :config
-;;   (add-hook 'before-save-hook #'tide-format-before-save)
-;;   (add-hook 'typescript-mode-hook #'miken-setup-tide-mode)
-;;   (setq typescript-indent-level miken-js-indent))
-
-;; (use-package tree-sitter-langs :ensure t)
-
-;; TSX
-;; (use-package typescript-ts-mode)
+;; JSX/TSX
 (add-to-list 'auto-mode-alist '("\\.tsx\\'" . typescript-ts-mode))
-;; (use-package web-mode
-;;   :init
-;;   (setq standard-indent miken-js-indent)
-;;   :config
-;;   (add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
-;;   (add-hook 'web-mode-hook
-;;             (lambda ()
-;;               (when (string-equal "tsx" (file-name-extension buffer-file-name))
-;;                 (miken-setup-tide-mode)))))
 
 ;; HTML
 (global-set-key (kbd "C-c e") #'sgml-close-tag)
@@ -739,28 +603,6 @@ respectively."
     (rspec-toggle-spec-and-target))
   :bind
   ("M-s-t" . miken-rspec-toggle-flip))
-
-;;------------------------------------------------------------------------------
-;; alchemist / elixir
-
-;; (use-package alchemist
-;;   :defer t
-;;   :init
-;;   (setq alchemist-key-command-prefix (kbd "C-c ,"))
-;;   :config
-;;   (defun miken-insert-iex-pry ()
-;;     "Inserts the line `require IEx; IEx.pry'"
-;;     (interactive)
-;;     (miken-open-line-above)
-;;     (insert "require IEx; IEx.pry"))
-;;   (setq alchemist-mix-test-task "espec")
-;;   (add-to-list 'elixir-mode-hook
-;;                (defun auto-activate-ruby-end-mode-for-elixir-mode ()
-;;                  (set (make-variable-buffer-local 'ruby-end-expand-keywords-before-re)
-;;                       "\\(?:^\\|\\s-+\\)\\(?:do\\)")
-;;                  (set (make-variable-buffer-local 'ruby-end-check-statement-modifiers) nil)
-;;                  (ruby-end-mode +1)))
-;;   :bind (("M-s-p" . miken-insert-iex-pry)))
 
 ;;------------------------------------------------------------------------------
 ;; ediff setup
